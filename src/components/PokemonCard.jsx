@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { typeColors } from "../utils/pokemonColors";
+import { typeColors } from '../Utils/PokemonColors';
 
 function PokemonCard({ id, numero, nome, tipos, imagem }) {
 
