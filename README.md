@@ -27,4 +27,4 @@ O projeto foi construído no conceito de *Mobile First*, garantindo que a visual
 
 1. Clone o repositório:
    ```bash
-   git clone <https://github.com/guiflorence05-sudo/>
+   git clone <https://github.com/guiflorence05-sudo/Pokedex.git>
