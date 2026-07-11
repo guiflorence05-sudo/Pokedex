@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
 import { ArrowLeft, Star } from 'lucide-react';
-import { typeColors } from '../utils/PokemonColors';
+import { typeColors } from '../Utils/PokemonColors';
 
 function PokemonInfo() {
   const { id } = useParams();
