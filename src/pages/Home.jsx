@@ -2,17 +2,14 @@ import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import PokemonCard from '../components/PokemonCard';
 import Loader from '../components/Loader';
-// 1. IMPORTAÇÃO DA ESTRELA
 import { Star } from 'lucide-react';
 
 function Home() {
-  // 1. ESTADOS DE DADOS
   const [dicionario, setDicionario] = useState([]);
   const [pokemonsNaTela, setPokemonsNaTela] = useState([]);
-  const [favoritos, setFavoritos] = useState([]); // <-- NOVO ESTADO PARA OS FAVORITOS
+  const [favoritos, setFavoritos] = useState([]);
   const [busca, setBusca] = useState("");
   
-  // 2. ESTADOS DE INTERFACE
   const [carregando, setCarregando] = useState(true);
   const [carregandoMais, setCarregandoMais] = useState(false);
   const [quantidadeVisivel, setQuantidadeVisivel] = useState(20);
@@ -30,7 +27,6 @@ function Home() {
     setQuantidadeVisivel(20);
   };
 
-  // CICLO 1: Baixar a prancheta leve (Uma única vez)
   useEffect(() => {
     const baixarDicionario = async () => {
       try {
@@ -54,9 +50,7 @@ function Home() {
     baixarDicionario();
   }, []);
 
-  // CICLO 1.5: CARREGAR OS FAVORITOS (Novo!)
   useEffect(() => {
-    // Só tenta buscar os favoritos DEPOIS que o dicionário terminar de baixar
     if (dicionario.length === 0) return;
 
     const carregarFavoritos = async () => {
@@ -68,13 +62,10 @@ function Home() {
           return;
         }
 
-        // O localStorage guarda "#001". Precisamos transformar isso no ID "1" para achar no dicionário
         const idsFavoritos = salvos.map(num => parseInt(num.replace('#', ''), 10).toString());
 
-        // Filtra o dicionário para pegar apenas as URLs dos favoritos
         const recorteFavoritos = dicionario.filter(poke => idsFavoritos.includes(poke.id));
 
-        // Baixa os detalhes completos APENAS dos favoritos
         const promessas = recorteFavoritos.map(async (poke) => {
           const res = await fetch(poke.url);
           return await res.json();
@@ -97,9 +88,8 @@ function Home() {
     };
 
     carregarFavoritos();
-  }, [dicionario]); // Roda sempre que o dicionário estiver pronto
+  }, [dicionario]); 
 
-  // CICLO 2: O Motor de Renderização (Reage à Busca e ao Scroll)
   useEffect(() => {
     if (dicionario.length === 0) return;
 
@@ -135,7 +125,6 @@ function Home() {
     atualizarTela();
   }, [dicionario, busca, quantidadeVisivel]); 
 
-  // CICLO 3: O Sensor de Scroll Infinito
   useEffect(() => {
     const scrollInfinito = () => {
       const alturaTotal = document.documentElement.scrollHeight;
@@ -153,9 +142,7 @@ function Home() {
     return () => window.removeEventListener('scroll', scrollInfinito);
   }, [carregandoMais, carregando, quantidadeVisivel, dicionarioFiltrado.length]);
 
-  // ==========================================
-  // RENDERIZAÇÃO
-  // ==========================================
+
   return (
     <div className="w-full">
       <Header busca={busca} setBusca={lidarComBusca} />

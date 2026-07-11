@@ -64,7 +64,6 @@ function PokemonInfo() {
     }
   }, [pokemon]);
 
-  // 4. FUNÇÕES DE APOIO
   const alternarFavorito = () => {
     const favoritosSalvos = JSON.parse(localStorage.getItem('favoritosPokemons')) || [];
     let novaLista;
